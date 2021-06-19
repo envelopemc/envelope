@@ -11,8 +11,9 @@ def read_config():
         config.read('orange0config.ini')
         install_location = config['DEFAULT']['PaperMCInstallLoc']
         server_version = config['DEFAULT']['ServerVersion']
+        operating_system = config['DEFAULT']['OS']
         print(install_location + server_version)
-        return [install_location, server_version]
+        return [install_location, server_version, operating_system]
     except Exception as e:
         print(e)
 
@@ -75,9 +76,11 @@ def check_for_install():
 
 def check_version():
     # read the current version of the server from the version history file provided by the lovely papermc team
-    f = open('version_history.json', 'r')
-    current_version = json.load(f)
-    config_version = read_config()[1]
+    config = read_config()
+    if os.path.exists('{}/version_history.json'.format(config[0])):
+        f = open('{}/version_history.json'.format(config[0]), 'r')
+        current_version = json.load(f)
+    config_version = config[1]
 
     api_mc_req = requests.get('https://papermc.io/api/v1/paper')  # request a list of the latest mc releases of paper
     paper_mc_version = api_mc_req.json()['versions'][0]

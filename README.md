@@ -15,3 +15,10 @@ Application for managing and updating PaperMC servers.
 * Handling of server functions using console commands.
 * Web UI for managing server remotely.
 * Automatic version control for PaperMC
+
+## Contributing
+Contributions are more than welcomed. 
+Please for the time being, create a pull request and describe what you would like to add. I will write a CONTRIBUTING.md document when I feel it's required.
+
+## License
+[GPL-3.0](https://choosealicense.com/licenses/gpl-3.0/)

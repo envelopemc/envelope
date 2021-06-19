@@ -1,4 +1,4 @@
-# Minecraft Server Baby Sitter
+# Orange Zero
 ![GitHub](https://img.shields.io/github/license/metares/findomatic?style=flat-square)
 ### For lack of a better name.
 Application for managing and updating PaperMC servers.

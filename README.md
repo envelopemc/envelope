@@ -13,3 +13,5 @@ Application for managing and updating PaperMC servers.
 
 ## Planned Features
 * Handling of server functions using console commands.
+* Web UI for managing server remotely.
+* Automatic version control for PaperMC

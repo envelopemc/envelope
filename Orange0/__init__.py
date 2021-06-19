@@ -8,7 +8,7 @@ import configparser
 def read_config():
     config = configparser.ConfigParser()
     try:
-        config.read('orange0config.ini')
+        config.read('config.ini')
         install_location = config['DEFAULT']['PaperMCInstallLoc']
         server_version = config['DEFAULT']['ServerVersion']
         operating_system = config['DEFAULT']['OS']

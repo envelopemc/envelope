@@ -26,6 +26,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+paper_server/
+version_history.json
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -127,3 +129,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Java files (working with MC)
+*.jar
+
+# Misc
+Old_Version.txt

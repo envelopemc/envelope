@@ -1,4 +1,4 @@
-<img src="https://github.com/lennibot/orangezero/blob/main/orange_zero.png?raw=true?sanitize=true" alt="Orange Zero Logo" width="300" align="right">
+<img src="https://raw.githubusercontent.com/lennibot/orangezero/main/orange_zero_logo.svg?sanitize=true" alt="Orange Zero Logo" width="75" align="left">
 
 # Orange Zero
 ![GitHub](https://img.shields.io/github/license/metares/findomatic?style=flat-square)

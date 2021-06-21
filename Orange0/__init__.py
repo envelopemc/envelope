@@ -9,11 +9,12 @@ def read_config():
     config = configparser.ConfigParser()
     try:
         config.read('config.ini')
-        install_location = config['DEFAULT']['PaperMCInstallLoc']
-        server_version = config['DEFAULT']['ServerVersion']
-        operating_system = config['DEFAULT']['OS']
+        install_location = config['CONFIG']['PaperMCInstallLoc']
+        server_version = config['CONFIG']['MinecraftVersion']
+        operating_system = config['CONFIG']['OS']
+        memory = config['CONFIG']['Memory']
         print(install_location + server_version)
-        return [install_location, server_version, operating_system]
+        return [install_location, server_version, operating_system, memory]
     except Exception as e:
         print(e)
 
@@ -80,32 +81,25 @@ def check_version():
     if os.path.exists('{}/version_history.json'.format(config[0])):
         f = open('{}/version_history.json'.format(config[0]), 'r')
         current_version = json.load(f)
+    else:
+        current_version = None
+
     config_version = config[1]
 
     api_mc_req = requests.get('https://papermc.io/api/v1/paper')  # request a list of the latest mc releases of paper
     paper_mc_version = api_mc_req.json()['versions'][0]
     print('Current MC version for paper: ' + paper_mc_version)
-
-    current_paper_ver = current_version['currentVersion'].strip('git-Paper-').split(" ", 1)
-    print('Current MC version installed: ' + current_paper_ver[1].strip('()'))
-    print('Current paper release installed: ' + current_paper_ver[0])
+    if current_version is not None:
+        current_paper_ver = current_version['currentVersion'].strip('git-Paper-').split(" ", 1)
+        print('Current MC version installed: ' + current_paper_ver[1].strip('()'))
+        print('Current paper release installed: ' + current_paper_ver[0])
+    elif config_version is not None:
+        current_paper_ver = config_version
     try:
         paper_ver_req = requests.get('https://papermc.io/api/v1/paper/{MCVERSION}/'.format(MCVERSION=config_version))
         api_paper_ver = paper_ver_req.json()['builds']['latest']
     except Exception as e:
         print(e)
-
-    if current_paper_ver[1].strip('() MC:') != paper_mc_version:
-        with open('Old_Version.txt', 'w') as f:
-            f.write('The Minecraft version on the newest release of Paper is newer than the installed version. Please '
-                    'ensure that all plugins are up to date before continuing.')
-        print('Newer Minecraft Version Available...')
-    else:
-        if os.path.exists('Old_Version.txt'):
-            os.remove('Old_Version.txt')
-        else:
-            pass
-        pass
 
     if check_for_install():
         pass
@@ -114,8 +108,17 @@ def check_version():
         # function to handle setting up server
         create_server(config_version, api_paper_ver)
 
-    if int(current_paper_ver[0]) == int(api_paper_ver):
-        print('Up To Date!')
+    if current_paper_ver[1].strip('() MC:') != paper_mc_version:
+        print('Up To Date for current Minecraft version...')
+        with open('Old_Version.txt', 'w') as f:
+            f.write('The Minecraft version on the newest release of Paper is newer than the installed version. Please '
+                    'ensure that all plugins are up to date before continuing.')
+        print('Newer Minecraft Version Available...')
     else:
-        print('Updating!')
-        update_server(config_version, api_paper_ver)
+        if os.path.exists('Old_Version.txt'):
+            os.remove('Old_Version.txt')
+        if int(current_paper_ver[0]) == int(api_paper_ver):
+            print('Up To Date!')
+        else:
+            print('Updating!')
+            update_server(config_version, api_paper_ver)

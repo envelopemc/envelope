@@ -3,6 +3,7 @@ import json
 import os
 import shutil
 import configparser
+from Orange0.batch_generator import BatchGen
 
 
 def read_config():
@@ -33,6 +34,9 @@ def create_server(mc_version, latest):
         with open('./paper_server/paper.jar', 'wb') as f:
             f.write(download.content)
         print('Sucessfully Downloaded PaperMC jar file')
+
+        batch = BatchGen()
+        batch.batch_gen()
     except Exception as e:
         print(e)
 

@@ -13,12 +13,16 @@ import os
 
 class BatchGen:
     def __init__(self):
+        # simply read the config setup by the user (or the default values)
         config = Orange0.read_config()
+        # gets the operating system
         operating_system = os.name
+        # set instance variables
         self.install_location = config[0]
         self.memory = config[3]
         self.operating_system = operating_system
-        print(operating_system)
+        print(operating_system) # debug stuff
+        # Aikar's Flags
         self.start_flags = 'java -Xms{MEMORY}G -Xmx{MEMORY}G ' \
                            '-XX:+UseG1GC-XX:+ParallelRefProcEnabled-XX:MaxGCPauseMillis=200-XX' \
                            ':+UnlockExperimentalVMOptions-XX:+DisableExplicitGC-XX:+AlwaysPreTouch-XX' \
@@ -31,8 +35,10 @@ class BatchGen:
                            '.aikars.flags=https://mcflags.emc.gs-Daikars.new.flags=true -jar paper.jar nogui'
 
     def batch_gen(self):
+        # start unix-based generation
         if self.operating_system == 'posix':
             with open('{INSTALL_LOCATION}/start.sh'.format(INSTALL_LOCATION=self.install_location), 'w') as f:
+                # check memory size for server
                 if self.memory > '12':
                     G1NewSizePercent = '30'
                     G1MaxNewSizePercent = '40'
@@ -55,6 +61,7 @@ class BatchGen:
                                                     G1HeapRegionSize=G1HeapRegionSize,
                                                     G1ReservePercent=G1ReservePercent,
                                                     InitiatingHeapOccupancyPercent=InitiatingHeapOccupancyPercent))
+        # start nt(windows)-based generation
         elif self.operating_system == 'nt':
             # TO-DO: write the windows batch gen script
             pass

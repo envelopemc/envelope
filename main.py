@@ -1,13 +1,8 @@
 import Orange0
-from Orange0.batch_generator import BatchGen
-import os
 
 if __name__ == '__main__':
-    if os.path.exists('./config.ini'):
-        Orange0.read_config()
-
-    else:
-        pass
+    """
+    At the moment all this script does it check, update, and verify the current version of Paper.
+    Eventually this main script will spawn several subprocesses that handle the various needs of a Minecraft Server.
+    """
     Orange0.check_version()
-
-    BatchGen()

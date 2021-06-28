@@ -5,9 +5,9 @@ import shutil
 import configparser
 from datetime import datetime
 import logging
-from Orange0.batch_generator import BatchGen
-from Orange0.update import UpdateServer
-from Orange0.utils import ConfigInit
+from OrangeSherbet.batch_generator import BatchGen
+from OrangeSherbet.update import UpdateServer
+from OrangeSherbet.utils import ConfigInit
 
 log_file = './logs/{}.log'.format(datetime.strftime(datetime.utcnow(), "%s"))
 

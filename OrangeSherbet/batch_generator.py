@@ -7,14 +7,14 @@ Using the awesome flags provided by Aikar.
 https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
 """
 
-import Orange0
+import OrangeSherbet
 import os
 
 
 class BatchGen:
     def __init__(self):
         # simply read the config setup by the user (or the default values)
-        config = Orange0.read_config()
+        config = OrangeSherbet.read_config()
         # gets the operating system
         operating_system = os.name
         # set instance variables

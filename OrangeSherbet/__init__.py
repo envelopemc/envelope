@@ -8,6 +8,7 @@ import logging
 from OrangeSherbet.batch_generator import BatchGen
 from OrangeSherbet.update import UpdateServer
 from OrangeSherbet.utils import ConfigInit
+from OrangeSherbet.server_handler import ServerHandler
 
 log_file = './logs/{}.log'.format(datetime.strftime(datetime.utcnow(), "%s"))
 
@@ -33,7 +34,7 @@ def create_server(mc_version, latest):
         print('Sucessfully Downloaded PaperMC jar file')
 
         # generate the batch file for the new server using the parameters in config.ini
-        batch = BatchGen()
+        batch = BatchGen(config)
         batch.batch_gen()
     except Exception as e:
         print(e)
@@ -41,7 +42,7 @@ def create_server(mc_version, latest):
 
 # simple function that checks if paper.jar exists in the directory
 def check_for_install():
-    if os.path.exists('./paper_server/paper.jar'):
+    if os.path.exists('./paper_server/paper.jar') & os.path.exists('./paper_server/start.sh'):
         return True
     else:
         return False
@@ -58,6 +59,7 @@ def check_for_vh():
 
 
 def check_version():
+    server = ServerHandler(config)
     current_version = check_for_vh()
     config_version = config[1]
     api_mc_req = requests.get('https://papermc.io/api/v1/paper')  # request a list of the latest mc releases of paper
@@ -79,26 +81,29 @@ def check_version():
         print(e)
 
     if check_for_install():
-        pass
+        if check_for_vh() is None:
+            server.start()
+        else:
+            if current_paper_ver != paper_mc_version:
+                logging.info('Up To Date for current Minecraft release...')
+                logging.warning('The Minecraft version on the newest release of Paper is newer than the installed version. '
+                                'Please ensure that all plugins are up to date before continuing.')
+                logging.info('Newer Minecraft Version Available...')
+                server.start()
+            else:
+                if version_used == 'version_history':
+                    if current_paper_ver == paper_mc_version:
+                        logging.info('Up To Date!')
+                        server.start()
+                    else:
+                        logging.debug('Calling updater...')
+                        updater = UpdateServer(config_version, api_paper_ver)
+                        updater.start()
+                elif version_used == 'config':
+                    logging.debug('Calling updater...')
+                    updater = UpdateServer(config, config_version, api_paper_ver)
+                    updater.start()
     else:
         print('Paper is not installed.')
         # function to handle setting up server
         create_server(config_version, api_paper_ver)
-
-    if current_paper_ver != paper_mc_version:
-        logging.info('Up To Date for current Minecraft release...')
-        logging.warning('The Minecraft version on the newest release of Paper is newer than the installed version. '
-                        'Please ensure that all plugins are up to date before continuing.')
-        logging.info('Newer Minecraft Version Available...')
-    else:
-        if version_used == 'version_history':
-            if current_paper_ver == paper_mc_version:
-                logging.info('Up To Date!')
-            else:
-                logging.debug('Calling updater...')
-                updater = UpdateServer(config_version, api_paper_ver)
-                updater.start()
-        elif version_used == 'config':
-            logging.debug('Calling updater...')
-            updater = UpdateServer(config, config_version, api_paper_ver)
-            updater.start()

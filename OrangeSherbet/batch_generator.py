@@ -7,14 +7,12 @@ Using the awesome flags provided by Aikar.
 https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
 """
 
-import OrangeSherbet
 import os
 
 
 class BatchGen:
-    def __init__(self):
+    def __init__(self, config):
         # simply read the config setup by the user (or the default values)
-        config = OrangeSherbet.read_config()
         # gets the operating system
         operating_system = os.name
         # set instance variables
@@ -32,12 +30,13 @@ class BatchGen:
                            'G1MaxNewSizePercent}-XX' \
                            ':G1HeapRegionSize={G1HeapRegionSize}-XX:G1ReservePercent={' \
                            'G1ReservePercent}-XX:InitiatingHeapOccupancyPercent={InitiatingHeapOccupancyPercent}-Dusing' \
-                           '.aikars.flags=https://mcflags.emc.gs-Daikars.new.flags=true -jar paper.jar nogui'
+                           '.aikars.flags=https://mcflags.emc.gs-Daikars.new.flags=true ' \
+                           f'-jar {self.install_location}/paper.jar nogui'
 
     def batch_gen(self):
         # start unix-based generation
         if self.operating_system == 'posix':
-            with open('{INSTALL_LOCATION}/start.sh'.format(INSTALL_LOCATION=self.install_location), 'w') as f:
+            with open(f'{self.install_location}/start.sh', 'w') as f:
                 # check memory size for server
                 if self.memory > '12':
                     G1NewSizePercent = '30'
@@ -61,6 +60,7 @@ class BatchGen:
                                                     G1HeapRegionSize=G1HeapRegionSize,
                                                     G1ReservePercent=G1ReservePercent,
                                                     InitiatingHeapOccupancyPercent=InitiatingHeapOccupancyPercent))
+            os.chmod(f'{self.install_location}/start.sh', 0o777)
         # start nt(windows)-based generation
         elif self.operating_system == 'nt':
             # TO-DO: write the windows batch gen script

@@ -2,13 +2,13 @@ import logging
 import os
 import shutil
 import requests
-import threading
+from threading import Thread
 
 
-class UpdateServer(threading.Thread):
+class UpdateServer(Thread):
     def __init__(self, config, mc_version, latest):
         # simply read the config setup by the user (or the default values)
-        threading.Thread.__init__(self)
+        Thread.__init__(self)
         self.mc_version = mc_version
         self.latest = latest
         self.install_location = config[0]

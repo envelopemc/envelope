@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/lennibot/orangezero/main/orange_zero_logo.svg?sanitize=true" alt="Orange Zero Logo" width="75" align="left">
 
-# Project Orange Zero
+# Orange Zero
 ![GitHub](https://img.shields.io/github/license/metares/findomatic?style=flat-square)
 
 Application for managing and updating PaperMC servers.

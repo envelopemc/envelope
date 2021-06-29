@@ -1,5 +1,3 @@
-<img src="https://raw.githubusercontent.com/lennibot/orangezero/main/orange_zero_logo.svg?sanitize=true" alt="Orange Zero Logo" width="75" align="left">
-
 # Orange Sherbet
 ![GitHub](https://img.shields.io/github/license/metares/findomatic?style=flat-square)
 

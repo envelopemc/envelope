@@ -3,9 +3,7 @@
 
 Application for managing and updating PaperMC servers.
 
-~~*Currently only planning releases for Unix based platforms (Linux & MacOS). Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*~~
-
-*Creating a Windows version along size the Unix version is easier and makes more sense. So, unless otherwise noted, this will work for both platforms.*
+*Currently only planning releases for Unix based platforms (Linux & MacOS). Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 
 
 ## Required Python Packages

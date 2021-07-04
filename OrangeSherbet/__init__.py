@@ -5,17 +5,27 @@ import shutil
 import configparser
 from datetime import datetime
 import logging
+import atexit
 from OrangeSherbet.batch_generator import BatchGen
 from OrangeSherbet.update import UpdateServer
 from OrangeSherbet.utils import ConfigInit
 from OrangeSherbet.server_handler import ServerHandler
+from OrangeSherbet.web_server import FlaskServer
 
-log_file = './logs/{}.log'.format(datetime.strftime(datetime.utcnow(), "%s"))
+# check if logging folder exists
+if os.path.exists('./logs'):
+    log_file = f'./logs/{datetime.strftime(datetime.utcnow(), "%s")}.log'
+else:
+    os.makedirs('./logs', 0o777)
+    log_file = f'./logs/{datetime.strftime(datetime.utcnow(), "%s")}.log'
+
 
 logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
 config_init = ConfigInit()
 config = config_init.get_values()
+server = ServerHandler(config)
+flask = FlaskServer(server)
 
 
 def create_server(mc_version, latest):
@@ -50,26 +60,25 @@ def check_for_install():
 
 def check_for_vh():
     # read the current version of the server from the version history file provided by the lovely papermc team
-    if os.path.exists('{}/version_history.json'.format(config[0])):
-        f = open('{}/version_history.json'.format(config[0]), 'r')
+    if os.path.exists(f'{config[0]}/version_history.json'):
+        f = open(f'{config[0]}/version_history.json', 'r')
         current_version = json.load(f)
-        return current_version[1].strip('() MC:')
+        return current_version['currentVersion'].strip('() MC:')
     else:
         return None
 
 
 def check_version():
-    server = ServerHandler(config)
     current_version = check_for_vh()
     config_version = config[1]
     api_mc_req = requests.get('https://papermc.io/api/v1/paper')  # request a list of the latest mc releases of paper
     paper_mc_version = api_mc_req.json()['versions'][0]
     print('Current MC version for paper: ' + paper_mc_version)
     if current_version is not None:
-        current_paper_ver = current_version['currentVersion'].strip('git-Paper-').split(" ", 1)
+        current_paper_ver = current_version.strip('git-Paper-').split(" ", 1)
         print('Current MC version installed: ' + current_paper_ver[1].strip('()'))
         print('Current paper release installed: ' + current_paper_ver[0])
-        version_used = 'version_history'
+        version_used = 'vh'
     else:
         current_paper_ver = config_version
         version_used = 'config'
@@ -77,33 +86,49 @@ def check_version():
     try:
         paper_ver_req = requests.get('https://papermc.io/api/v1/paper/{MCVERSION}/'.format(MCVERSION=config_version))
         api_paper_ver = paper_ver_req.json()['builds']['latest']
+        print(f'API VERSION: {api_paper_ver}')
     except Exception as e:
         print(e)
+
+    minecraft_server_version = current_paper_ver[1].strip('()').strip('MC: ')
 
     if check_for_install():
         if check_for_vh() is None:
             server.start()
+            flask.start()
         else:
-            if current_paper_ver != paper_mc_version:
+            if minecraft_server_version != paper_mc_version:
                 logging.info('Up To Date for current Minecraft release...')
                 logging.warning('The Minecraft version on the newest release of Paper is newer than the installed version. '
                                 'Please ensure that all plugins are up to date before continuing.')
                 logging.info('Newer Minecraft Version Available...')
                 server.start()
+                flask.start()
             else:
-                if version_used == 'version_history':
-                    if current_paper_ver == paper_mc_version:
-                        logging.info('Up To Date!')
-                        server.start()
-                    else:
-                        logging.debug('Calling updater...')
-                        updater = UpdateServer(config_version, api_paper_ver)
-                        updater.start()
+                if version_used == 'vh':
+                    logging.info('Up To Date!')
+                    server.start()
+                    flask.start()
                 elif version_used == 'config':
                     logging.debug('Calling updater...')
                     updater = UpdateServer(config, config_version, api_paper_ver)
                     updater.start()
+                else:
+                    logging.debug('Calling updater...')
+                    updater = UpdateServer(config, config_version, api_paper_ver)
+                    updater.start()
+                    updater.join()
+                    server.start()
+                    flask.start()
     else:
         print('Paper is not installed.')
         # function to handle setting up server
         create_server(config_version, api_paper_ver)
+
+
+def send_command(command):
+    server.command(command=command)
+
+
+def shutdown():
+    atexit.register(server.join())

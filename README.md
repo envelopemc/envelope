@@ -5,6 +5,9 @@ Application for managing and updating PaperMC servers.
 
 *Currently only planning releases for Unix based platforms (Linux & MacOS). Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 
+## Wiki
+[View the Wiki here!](https://github.com/lennibot/orange-sherbet/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Orange Sherbet.
+
 
 ## Required Python Packages
 * requests

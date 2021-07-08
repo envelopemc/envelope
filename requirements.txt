@@ -4,3 +4,5 @@ idna==2.10
 requests==2.25.1
 urllib3==1.26.5
 Flask~=2.0.1
+Werkzeug~=2.0.1
+gevent~=21.1.2

@@ -1,16 +1,20 @@
-import requests
-import json
-import os
-import shutil
-import configparser
-from datetime import datetime
-import logging
+"""
+'__init__' file for the main OrangeSherbet package.
+"""
+# python packages import
 import atexit
+import json
+import logging
+import os
+import requests
+from datetime import datetime
+from collections import OrderedDict
+# orange sherbet imports
 from OrangeSherbet.batch_generator import BatchGen
+from OrangeSherbet.server_handler import ServerHandler
 from OrangeSherbet.update import UpdateServer
 from OrangeSherbet.utils import ConfigInit
-from OrangeSherbet.server_handler import ServerHandler
-from OrangeSherbet.web_server import FlaskServer
+from OrangeSherbet.flask_server import FlaskServer
 
 # check if logging folder exists
 if os.path.exists('./logs'):
@@ -19,13 +23,15 @@ else:
     os.makedirs('./logs', 0o777)
     log_file = f'./logs/{datetime.strftime(datetime.utcnow(), "%s")}.log'
 
+cache_dict = OrderedDict()
+
 
 logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
 config_init = ConfigInit()
 config = config_init.get_values()
-server = ServerHandler(config)
-flask = FlaskServer(server)
+server = ServerHandler(config, cache_dict)
+flask = FlaskServer(server, cache_dict)
 
 
 def create_server(mc_version, latest):
@@ -97,11 +103,19 @@ def check_version():
             server.start()
             flask.start()
         else:
-            if minecraft_server_version != paper_mc_version:
+            if minecraft_server_version != paper_mc_version and config_version != paper_mc_version:
                 logging.info('Up To Date for current Minecraft release...')
-                logging.warning('The Minecraft version on the newest release of Paper is newer than the installed version. '
+                logging.warning('The Minecraft version on the newest release of Paper is newer than the installed '
+                                'version. '
                                 'Please ensure that all plugins are up to date before continuing.')
                 logging.info('Newer Minecraft Version Available...')
+                server.start()
+                flask.start()
+            elif config_version == paper_mc_version:
+                logging.debug('Calling updater...')
+                updater = UpdateServer(config, config_version, api_paper_ver)
+                updater.start()
+                updater.join()
                 server.start()
                 flask.start()
             else:
@@ -130,5 +144,10 @@ def send_command(command):
     server.command(command=command)
 
 
+def send_console_update():
+    flask.socket_console()
+
+
 def shutdown():
-    atexit.register(server.join())
+    server.join()
+    flask.join()

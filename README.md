@@ -8,6 +8,9 @@ Application for managing and updating PaperMC servers.
 
 ## Required Python Packages
 * requests
+* Flask
+* Flask-SocketIO
+* Gevent
 
 ## Planned Features
 * Web UI for managing server remotely.

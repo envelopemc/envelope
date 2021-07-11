@@ -26,9 +26,8 @@ def write_console_log(into):
 
 class ServerHandler(Thread):
     # initialize thread for server handler
-    def __init__(self, config, cache_dict):
+    def __init__(self, config):
         Thread.__init__(self)
-        self.cache = cache_dict
         self.install_location = config[0]
         self.server = Popen('./start.sh', stdout=PIPE, stdin=PIPE,
                             cwd=self.install_location, shell=True)

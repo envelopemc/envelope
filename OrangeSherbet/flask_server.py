@@ -12,8 +12,7 @@ console_log = []
 
 
 class FlaskServer:
-    def __init__(self, minecraft_server, cache_dict):
-        self.cache = cache_dict
+    def __init__(self, minecraft_server):
         self.app = Flask(__name__)
         self.api = Api(self.app)
         self.cors = CORS(self.app)

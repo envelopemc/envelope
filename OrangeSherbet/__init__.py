@@ -23,24 +23,23 @@ else:
     os.makedirs('./logs', 0o777)
     log_file = f'./logs/{datetime.strftime(datetime.utcnow(), "%s")}.log'
 
-cache_dict = OrderedDict()
-
-
 logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
 config_init = ConfigInit()
 config = config_init.get_values()
-server = ServerHandler(config, cache_dict)
-flask = FlaskServer(server, cache_dict)
+
+# Create the server folder as specified in the config
+if os.path.exists(f'.{config[0]}') is False:
+    os.makedirs(f'.{config[0]}', 0o777)
+else:
+    pass
+
+server = ServerHandler(config)
+flask = FlaskServer(server)
 
 
 def create_server(mc_version, latest):
     try:
-        if os.path.exists('./paper_server') is False:
-            os.makedirs('./paper_server', 0o777)
-        else:
-            pass
-
         # use the previous api calls to get the latest version of paper for MC version
         url = 'https://papermc.io/api/v1/paper/{MCVERSION}/{latest}/download'.format(MCVERSION=mc_version,
                                                                                      latest=latest)

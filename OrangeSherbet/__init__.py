@@ -29,8 +29,8 @@ config_init = ConfigInit()
 config = config_init.get_values()
 
 # Create the server folder as specified in the config
-if os.path.exists(f'.{config[0]}') is False:
-    os.makedirs(f'.{config[0]}', 0o777)
+if os.path.exists(f'{config[0]}') is False:
+    os.makedirs(f'{config[0]}', 0o777)
 else:
     pass
 
@@ -44,7 +44,7 @@ def create_server(mc_version, latest):
         url = 'https://papermc.io/api/v1/paper/{MCVERSION}/{latest}/download'.format(MCVERSION=mc_version,
                                                                                      latest=latest)
         download = requests.get(url)
-        with open('./paper_server/paper.jar', 'wb') as f:
+        with open(f'{config[0]}/paper.jar', 'wb') as f:
             f.write(download.content)
         print('Sucessfully Downloaded PaperMC jar file')
 
@@ -57,7 +57,7 @@ def create_server(mc_version, latest):
 
 # simple function that checks if paper.jar exists in the directory
 def check_for_install():
-    if os.path.exists('./paper_server/paper.jar') & os.path.exists('./paper_server/start.sh'):
+    if os.path.exists(f'{config[0]}/paper.jar') & os.path.exists(f'{config[0]}/start.sh'):
         return True
     else:
         return False

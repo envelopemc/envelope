@@ -9,13 +9,13 @@ Application for managing and updating PaperMC servers.
 #### using curl
 
 ```shell
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/lennibot/orange-sherbet/main/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/lennibot/orange-sherbet/main/tools/install.sh)"
 ```
 
 #### using wget
 
 ```shell
-bash -c "$(wget https://raw.githubusercontent.com/lennibot/orange-sherbet/main/install.sh -O -)"
+bash -c "$(wget https://raw.githubusercontent.com/lennibot/orange-sherbet/main/tools/install.sh -O -)"
 ```
 
 ## Wiki

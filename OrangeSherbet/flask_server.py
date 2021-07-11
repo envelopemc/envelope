@@ -22,7 +22,6 @@ class FlaskServer:
         self.mc_server = minecraft_server
         self.parser = reqparse.RequestParser()
         self.sio = SocketIO(self.app, cors_allowed_origins="*")
-        self.poller = Poller(self, self.cache)
 
         @self.sio.on('connected')
         def client_connected(data):

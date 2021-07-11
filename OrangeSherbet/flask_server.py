@@ -7,7 +7,6 @@ from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from OrangeSherbet.web_serving import ServerThread
-from OrangeSherbet.poller import Poller
 
 console_log = []
 
@@ -23,7 +22,6 @@ class FlaskServer:
         self.mc_server = minecraft_server
         self.parser = reqparse.RequestParser()
         self.sio = SocketIO(self.app, cors_allowed_origins="*")
-        self.poller = Poller(self, self.cache)
 
         @self.sio.on('connected')
         def client_connected(data):

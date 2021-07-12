@@ -1,4 +1,4 @@
-# Orange Sherbet
+# Envelope
 ![GitHub](https://img.shields.io/github/license/metares/findomatic?style=flat-square)
 
 Application for managing and updating PaperMC servers.
@@ -9,17 +9,17 @@ Application for managing and updating PaperMC servers.
 #### using curl
 
 ```shell
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/lennibot/orange-sherbet/main/tools/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/lennibot/envelope/main/tools/install.sh)"
 ```
 
 #### using wget
 
 ```shell
-bash -c "$(wget https://raw.githubusercontent.com/lennibot/orange-sherbet/main/tools/install.sh -O -)"
+bash -c "$(wget https://raw.githubusercontent.com/lennibot/envelope/main/tools/install.sh -O -)"
 ```
 
 ## Wiki
-[View the Wiki here!](https://github.com/lennibot/orange-sherbet/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Orange Sherbet.
+[View the Wiki here!](https://github.com/lennibot/envelope/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Envelope.
 
 
 ## Required Python Packages

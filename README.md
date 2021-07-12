@@ -9,6 +9,7 @@ Application for managing and updating PaperMC servers.
 *Currently only planning releases for Unix based platforms (Linux & MacOS). Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 
 ### Installation
+_"main" branch contains the most updated stable release "dev"; branch contains the latest (not stable) build_
 #### using curl
 
 ```shell

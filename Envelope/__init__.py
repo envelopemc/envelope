@@ -1,5 +1,5 @@
 """
-'__init__' file for the main OrangeSherbet package.
+'__init__' file for the main Envelope package.
 """
 # python packages import
 import atexit
@@ -10,11 +10,11 @@ import requests
 from datetime import datetime
 from collections import OrderedDict
 # orange sherbet imports
-from OrangeSherbet.batch_generator import BatchGen
-from OrangeSherbet.server_handler import ServerHandler
-from OrangeSherbet.update import UpdateServer
-from OrangeSherbet.utils import ConfigInit
-from OrangeSherbet.flask_server import FlaskServer
+from Envelope.batch_generator import BatchGen
+from Envelope.server_handler import ServerHandler
+from Envelope.update import UpdateServer
+from Envelope.utils import ConfigInit
+from Envelope.flask_server import FlaskServer
 
 # check if logging folder exists
 if os.path.exists('./logs'):

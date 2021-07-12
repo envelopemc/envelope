@@ -42,9 +42,10 @@ main() {
     }
 
     printf "${BLUE}Creating Python virtual-enviroment${NORMAL}\n"
-    cd orange-sherbet/
+    cd envelope/ || {
+    }
     python3 -m venv venv || {
-        printf "Creating of virtual-enviroment failed...\n"
+        printf "Creating of virtual-environment failed...\n"
         exit 1
     }
 

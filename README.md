@@ -1,4 +1,7 @@
+<img src="https://raw.githubusercontent.com/lennibot/envelope/dev/tools/logo.svg" align="right" height="250" width="250">
+
 # Envelope
+
 ![GitHub](https://img.shields.io/github/license/metares/findomatic?style=flat-square)
 
 Application for managing and updating PaperMC servers.

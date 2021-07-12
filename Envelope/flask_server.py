@@ -32,16 +32,13 @@ class FlaskServer:
         def command_getter():
             if request.method == 'POST':
                 try:
-                    print(request.headers)
-                    print(request.server)
-                    print(request.form.to_dict())
                     command = request.form.get('cmd')
                     self.mc_server.command(command)
                     return jsonify(result={"status": 200})
                 except Exception as e:
                     return e
             else:
-                return request.method
+                return jsonify(result={"status": 401})
 
         @self.app.route('/sendconsole', methods=['GET', 'POST'])
         def send_console():

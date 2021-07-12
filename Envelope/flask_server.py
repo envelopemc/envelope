@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS
 from flask_socketio import SocketIO
-from OrangeSherbet.web_serving import ServerThread
+from Envelope.web_serving import ServerThread
 
 console_log = []
 

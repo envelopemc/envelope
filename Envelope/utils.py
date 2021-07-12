@@ -12,7 +12,8 @@ class ConfigInit:
             server_version = config_parse['CONFIG']['MINECRAFT_VERSION']
             operating_system = config_parse['CONFIG']['OS']
             memory = config_parse['CONFIG']['SERVER_MEMORY']
-            self.config = [install_location, server_version, operating_system, memory]
+            endpoint_port = config_parse['CONFIG']['ENDPOINT_PORT']
+            self.config = [install_location, server_version, operating_system, memory, endpoint_port]
         except Exception as e:
             print(e)
 

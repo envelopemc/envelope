@@ -36,7 +36,7 @@ main() {
         exit 1
     }
 
-    git clone https://github.com/lennibot/orange-sherbet.git || {
+    git clone https://github.com/lennibot/envelope.git || {
         printf "ERROR: Cloning of the repository failed...\n"
         exit 1
     }

@@ -33,8 +33,9 @@ bash -c "$(wget https://raw.githubusercontent.com/lennibot/envelope/main/tools/i
 * Gevent
 
 ## Planned Features
-* Web UI for managing server remotely.
+* Web UI for managing server remotely
 * Automatic version control for PaperMC
+* Automatic plugin updates
 
 ## Contributing
 Contributions are more than welcomed. 

@@ -9,7 +9,7 @@ Application for managing and updating PaperMC servers.
 *Currently only planning releases for Unix based platforms. Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 
 ### Installation
-_"main" branch contains the most updated stable release
+_"main" branch contains the most updated stable release_
 
 ```shell
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/lennibot/envelope/main/tools/install.sh)"

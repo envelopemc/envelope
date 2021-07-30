@@ -4,7 +4,7 @@
 
 ![GitHub](https://img.shields.io/github/license/envelopemc/envelope?style=flat-square)
 
-Application for managing and updating PaperMC servers.
+A wrapper for managing and updating Minecraft Servers (specifically Paper ones)
 
 *Currently only planning releases for Unix based platforms. Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 

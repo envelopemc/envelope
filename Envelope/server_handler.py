@@ -19,6 +19,7 @@ def delete_console_log():
 def write_console_log(into):
     try:
         r = requests.post("http://localhost:5000/sendconsole", data=into)
+        logging.info(f'[SERVER CONSOLE]{into}')
         console_log.append(into)
     except Exception as e:
         logging.debug(e)
@@ -40,7 +41,8 @@ class ServerHandler(Thread):
         try:
             delete_console_log()
             logging.debug('SERVER HANDLER: Starting server handler thread...')
-            # create a subprocess for the server (make the work directory the install location
+            # create a subprocess for the server (make the work directory the install location)
+            print('Server Started')
             while True:
                 # simply print server output to the command line for the time being
                 output = self.server.stdout.readline()

@@ -2,19 +2,18 @@
 '__init__' file for the main Envelope package.
 """
 # python packages import
-import atexit
 import json
 import logging
 import os
-import requests
 from datetime import datetime
-from collections import OrderedDict
+import requests
+
 # orange sherbet imports
 from Envelope.batch_generator import BatchGen
+from Envelope.flask_server import FlaskServer
 from Envelope.server_handler import ServerHandler
 from Envelope.update import UpdateServer
 from Envelope.utils import ConfigInit
-from Envelope.flask_server import FlaskServer
 
 # check if logging folder exists
 if os.path.exists('./logs'):
@@ -39,6 +38,7 @@ flask = FlaskServer(server)
 
 
 def create_server(mc_version, latest):
+    # primary function for creating the server
     try:
         # use the previous api calls to get the latest version of paper for MC version
         url = 'https://papermc.io/api/v1/paper/{MCVERSION}/{latest}/download'.format(MCVERSION=mc_version,
@@ -63,6 +63,7 @@ def check_for_install():
         return False
 
 
+# checks for the version history file and uses it to tell the version, if not found return None
 def check_for_vh():
     # read the current version of the server from the version history file provided by the lovely papermc team
     if os.path.exists(f'{config[0]}/version_history.json'):
@@ -70,73 +71,56 @@ def check_for_vh():
         current_version = json.load(f)
         return current_version['currentVersion'].strip('() MC:')
     else:
-        return None
+        return config[1]
 
 
 def check_version():
-    current_version = check_for_vh()
-    config_version = config[1]
+    # local paper version
+    local_version = check_for_vh()
+
     api_mc_req = requests.get('https://papermc.io/api/v1/paper')  # request a list of the latest mc releases of paper
-    paper_mc_version = api_mc_req.json()['versions'][0]
-    print('Current MC version for paper: ' + paper_mc_version)
-    if current_version is not None:
-        current_paper_ver = current_version.strip('git-Paper-').split(" ", 1)
-        print('Current MC version installed: ' + current_paper_ver[1].strip('()'))
-        print('Current paper release installed: ' + current_paper_ver[0])
-        version_used = 'vh'
-    else:
-        current_paper_ver = config_version
-        version_used = 'config'
+    # latest minecraft release supported by paper
+    latest_version = api_mc_req.json()['versions'][0]
 
-    try:
-        paper_ver_req = requests.get('https://papermc.io/api/v1/paper/{MCVERSION}/'.format(MCVERSION=config_version))
-        api_paper_ver = paper_ver_req.json()['builds']['latest']
-        print(f'API VERSION: {api_paper_ver}')
-    except Exception as e:
-        print(e)
+    print('Current MC version for paper: ' + latest_version)
+    current_local_paper_ver = local_version.strip('git-Paper-').split(" ", 1)
+    print('Current MC version installed: ' + current_local_paper_ver[1].strip('()'))
+    print('Current paper release installed: ' + current_local_paper_ver[0])
 
-    minecraft_server_version = current_paper_ver[1].strip('()').strip('MC: ')
+    local_minecraft_server_version = current_local_paper_ver[1].strip('()').strip('MC: ')
+
+    print(local_minecraft_server_version)
+
+    paper_ver_req = requests.get(f'https://papermc.io/api/v1/paper/{local_minecraft_server_version}/')
+    api_paper_ver = paper_ver_req.json()['builds']['latest']
+    print(f'API VERSION: {api_paper_ver}')
 
     if check_for_install():
-        if check_for_vh() is None:
+        # Simplified version check function, simply compares the current paper version (ie like 89) and then checks the
+        # the paper version of minecraft
+
+        if local_minecraft_server_version != latest_version and current_local_paper_ver[0] != paper_ver_req:
+            logging.info('Up To Date for current Minecraft release...')
+            logging.warning('The Minecraft version on the newest release of Paper is newer than the installed '
+                            'version. '
+                            'Please ensure that all plugins are up to date before continuing.')
+            logging.info('Newer Minecraft Version Available...')
             server.start()
             flask.start()
-        else:
-            if minecraft_server_version != paper_mc_version and config_version != paper_mc_version:
-                logging.info('Up To Date for current Minecraft release...')
-                logging.warning('The Minecraft version on the newest release of Paper is newer than the installed '
-                                'version. '
-                                'Please ensure that all plugins are up to date before continuing.')
-                logging.info('Newer Minecraft Version Available...')
-                server.start()
-                flask.start()
-            elif config_version == paper_mc_version:
-                logging.debug('Calling updater...')
-                updater = UpdateServer(config, config_version, api_paper_ver)
-                updater.start()
-                updater.join()
-                server.start()
-                flask.start()
-            else:
-                if version_used == 'vh':
-                    logging.info('Up To Date!')
-                    server.start()
-                    flask.start()
-                elif version_used == 'config':
-                    logging.debug('Calling updater...')
-                    updater = UpdateServer(config, config_version, api_paper_ver)
-                    updater.start()
-                else:
-                    logging.debug('Calling updater...')
-                    updater = UpdateServer(config, config_version, api_paper_ver)
-                    updater.start()
-                    updater.join()
-                    server.start()
-                    flask.start()
+        elif int(current_local_paper_ver[0]) != int(api_paper_ver):
+            logging.debug('Calling updater...')
+            updater = UpdateServer(config, local_minecraft_server_version, api_paper_ver)
+            updater.start()
+            updater.join()
+            server.start()
+            flask.start()
+        elif int(current_local_paper_ver[0]) == int(api_paper_ver):
+            server.start()
+            flask.start()
     else:
         print('Paper is not installed.')
         # function to handle setting up server
-        create_server(config_version, api_paper_ver)
+        create_server(config[1], api_paper_ver)
 
 
 def send_command(command):

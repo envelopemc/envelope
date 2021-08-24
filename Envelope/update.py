@@ -31,7 +31,7 @@ class UpdateServer(Thread):
             # download the new jar into the temp directory
             with open('./temp/paper.jar', 'wb') as f:
                 f.write(download.content)
-            logging.debug('UPDATER: Sucessfully Downloaded PaperMC jar file...')
+            logging.debug('UPDATER: Successfully Downloaded PaperMC jar file...')
 
             # remove old jar from the primary directory
             os.remove('./paper_server/paper.jar')

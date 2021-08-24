@@ -9,7 +9,7 @@ A wrapper for managing and updating Minecraft Servers (specifically Paper ones)
 *Currently only planning releases for Unix based platforms. Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 
 ### Installation
-Instructions for installation can be found at the project website, [envelopemc.net](https://envelopemc.net)
+Instructions for installation can be found at the (future) project website, [envelopemc.net](https://envelopemc.net)
 
 ## Wiki
 [View the Wiki here!](https://github.com/lennibot/envelope/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Envelope.

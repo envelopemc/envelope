@@ -19,6 +19,7 @@ Instructions for installation can be found at the (future) project website, [env
 * requests
 * Flask
 * Flask-SocketIO
+* Flask-Login
 * Gevent
 
 *(subject to change)*

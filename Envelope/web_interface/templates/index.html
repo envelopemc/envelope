@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="../static/js/socket.io.min.js"></script>
+        <script>
+            const socket = io("http://localhost:5000");
+        </script>
+        <script>
+            jQuery.support.cors = true;
+            $(document).ready(function(){
+                socket.on('connect', function() {
+                    var console = $("#log").val()
+                    socket.emit('connected', console);
+                });
+                socket.on('console_update', data => {
+                        var lines = data['data'].toString().split("\n");
+                        for (var i = 0, len = lines.length; i < len; i++) {
+                            if ( lines[i].charAt(0) == ",") {
+                                $("#log").append(lines[i].substring(1).trim() + "<br />");
+                            }
+                            else {
+                                $("#log").append(lines[i].trim() + "<br />");
+                            }
+                            var last_line = lines[lines.length -1]
+                        }
+                        socket.emit('console_update_results', {'data': last_line})
+                })
+                var data_string = '';
+                $.ajax({
+                    url : "http://localhost:5000/console",
+                    method : "GET",
+                    type: 'json',
+                    success: function(data) {
+
+                    }
+                });
+        })
+        </script>
+    </head>
+    <title>Console Log</title>
+    <div style="">
+        <div id="bodydesc" style="display: flex; flex-direction: column-reverse; margin-left:auto; margin-right:auto; width:960px; height: 600px; overflow-y: scroll;">
+            <p id="log"></p>
+        </div>
+        <form id="commandForm">
+            <label for="command">Command:</label>
+            <input type="text" id="command" name="cmd" value=""><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        $("#commandForm").submit(function(e) {
+
+            e.preventDefault();
+
+            var form = $(this);
+
+            $.ajax({
+                method: "POST",
+                contentType: 'application/x-www-form-urlencoded',
+                url: "http://localhost:5000/command",
+                data: form.serialize()
+            })
+        })
+    </script>
+</html>
+

@@ -2,7 +2,7 @@ import json
 import logging
 import os
 from typing import Optional
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS
 from flask_socketio import SocketIO
@@ -13,7 +13,9 @@ console_log = []
 
 class FlaskServer:
     def __init__(self, minecraft_server):
-        self.app = Flask(__name__)
+        self.app = Flask(__name__,
+                         static_folder='web_interface/static',
+                         template_folder='web_interface/templates')
         self.api = Api(self.app)
         self.cors = CORS(self.app)
         self.web_server = ServerThread(self.app)
@@ -27,6 +29,10 @@ class FlaskServer:
             print('connected' + data)
             if data == '':
                 self.sio.emit('console_update', {'data': console_log})
+
+        @self.app.route('/')
+        def index():
+            return render_template("index.html")
 
         @self.app.route('/command', methods=['GET', 'POST'])
         def command_getter():

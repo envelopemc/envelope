@@ -28,6 +28,10 @@ Instructions for installation can be found at the (future) project website, [env
 * Automatic version control for PaperMC
 * Automatic plugin updates
 
+## Project Team
+[![lennibot](https://gravatar.com/avatar/a3092a3e9580459a223b71ecb47daac7.png)](https://www.github.com/lennibot)
+
+
 ## Contributing
 Contributions are more than welcomed. 
 Please for the time being, create a pull request and describe what you would like to add. I will write a CONTRIBUTING.md document when I feel it's required.

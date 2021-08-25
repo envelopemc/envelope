@@ -6,6 +6,8 @@
 
 A wrapper for managing and updating Minecraft Servers (specifically Paper ones)
 
+Envelope aims at being simple and very user configurable; using simple to understand libraries such as Flask, jquery, and built-in python modules.
+
 *Currently only planning releases for Unix based platforms. Considering most VPS services utilize Unix-like operating systems, this is the natural choice. However, if demand for a Windows version is high, I will work on a Windows release.*
 
 ### Installation

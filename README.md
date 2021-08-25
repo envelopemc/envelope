@@ -21,6 +21,8 @@ Instructions for installation can be found at the (future) project website, [env
 * Flask-SocketIO
 * Gevent
 
+*(subject to change)*
+
 ## Planned Features
 * Web UI for managing server remotely
 * Automatic version control for PaperMC

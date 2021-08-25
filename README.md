@@ -31,6 +31,8 @@ Instructions for installation can be found at the (future) project website, [env
 ## Project Team
 [![lennibot](https://gravatar.com/avatar/a3092a3e9580459a223b71ecb47daac7.png)](https://www.github.com/lennibot)
 
+*Always open to new team members!*
+
 
 ## Contributing
 Contributions are more than welcomed. 

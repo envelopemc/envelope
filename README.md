@@ -16,7 +16,7 @@ Instructions for installation can be found at the (future) project website, [env
 
 
 ## Required Python Packages
-* requests
+* Requests
 * Flask
 * Flask-SocketIO
 * Flask-Login

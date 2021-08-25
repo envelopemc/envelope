@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/envelopemc/envelope/dev/tools/logo.svg" align="right" height="250" width="250">
+<img src="https://raw.githubusercontent.com/envelopemc/envelope/dev/tools/logo.svg" align="right" height="100" width="100">
 
 # Envelope
 

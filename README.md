@@ -3,6 +3,7 @@
 # Envelope
 
 ![GitHub](https://img.shields.io/github/license/envelopemc/envelope?style=flat-square)
+[![CodeQL](https://github.com/envelopemc/envelope/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/envelopemc/envelope/actions/workflows/codeql-analysis.yml)
 
 A wrapper for managing and updating Minecraft Servers (specifically Paper ones)
 

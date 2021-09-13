@@ -13,7 +13,7 @@ Envelope aims at being simple and very user configurable; using simple to unders
 Instructions for installation can be found at the (future) project website, [wiki.envelopemc.net](https://wiki.envelopemc.net)
 
 ## Wiki
-[View the Wiki here!](https://github.com/lennibot/envelope/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Envelope.
+[View the Wiki here!](https://github.com/lennibot/envelope/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Envelope. (Until the envelopemc.net website opens)
 
 
 ## Required Python Packages

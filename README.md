@@ -15,16 +15,6 @@ Instructions for installation can be found at the (future) project website, [wik
 ## Wiki
 [View the Wiki here!](https://github.com/lennibot/envelope/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Envelope. (Until the envelopemc.net website opens)
 
-
-## Required Python Packages
-* Requests
-* Flask
-* Flask-SocketIO
-* Flask-Login
-* Gevent
-
-*(subject to change)*
-
 ## Planned Features
 * Web UI for managing server remotely
 * Automatic version control for PaperMC

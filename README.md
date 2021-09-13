@@ -10,7 +10,7 @@ A wrapper for managing and updating Minecraft Servers (specifically Paper ones)
 Envelope aims at being simple and very user configurable; using simple to understand libraries such as Flask, jquery, and built-in python modules.
 
 ## Installation & Configuration
-Instructions for installation can be found at the (future) project website, [envelopemc.net](https://envelopemc.net)
+Instructions for installation can be found at the (future) project website, [wiki.envelopemc.net](https://wiki.envelopemc.net)
 
 ## Wiki
 [View the Wiki here!](https://github.com/lennibot/envelope/wiki) This will contain the most up to date information on this project as well as help you understand the inner workings of Envelope.
